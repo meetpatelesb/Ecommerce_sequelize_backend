@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   cart.init(
     {
       customer_id: DataTypes.INTEGER,
+      username: DataTypes.STRING,
     },
     {
       sequelize,

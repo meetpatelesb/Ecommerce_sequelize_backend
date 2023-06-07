@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       country: DataTypes.STRING,
       state: DataTypes.STRING,
       city: DataTypes.STRING,
-      picode: DataTypes.STRING,
+      pincode: DataTypes.STRING,
       address: DataTypes.STRING,
       phoneNo: DataTypes.STRING,
       email: DataTypes.STRING,
