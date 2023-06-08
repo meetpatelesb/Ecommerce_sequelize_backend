@@ -13,7 +13,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/musical_guitar.png",
+          product_image: "1686218691133.png",
         },
         {
           name: "Drums AA",
@@ -22,7 +22,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/musical_drum.png",
+          product_image: "1686218691163.png",
         },
         {
           name: "400 days book",
@@ -31,7 +31,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/book1.png",
+          product_image: "1686218509911.png",
         },
         {
           name: "One Indian Girl",
@@ -40,7 +40,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/book2.png",
+          product_image: "1686218496604.png",
         },
         {
           name: "Jamini Roy painting ",
@@ -49,7 +49,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/finart.png",
+          product_image: "1686218691116.png",
         },
         {
           name: " Mf hasan painting",
@@ -58,7 +58,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/fineart2.png",
+          product_image: "1686218691110.jpg",
         },
         {
           name: "Sony mania 5232",
@@ -67,7 +67,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/tv1.png",
+          product_image: "1686218630176.png",
         },
         {
           name: "Videocon m2x",
@@ -76,7 +76,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/tv2.png",
+          product_image: "1686218635243.png",
         },
         {
           name: "Samsung galaxy s23 ultra",
@@ -85,7 +85,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/samsung.png",
+          product_image: "1686218691119.png",
         },
         {
           name: "Iphone X",
@@ -94,7 +94,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: new Date(),
-          product_image: "product_images/phone_iphone.png",
+          product_image: "1686218720152.png",
         },
       ],
       {}

@@ -47,53 +47,67 @@ const signup = async (req, res) => {
     state,
   } = req.body;
 
-  const hash = await bcrypt.hash(password, 10);
-  const t = await db.sequelize.transaction();
-  try {
-    var addRegistrationData = await Customer.create(
-      {
-        username: first_name,
-        password: hash,
-        first_name: first_name,
-        last_name: last_name,
-        gender: gender,
-        dob: dob,
-        email: email,
-        phoneNo: phoneNo,
-        customer_addresses: {
-          country: country,
-          state: state,
-          city: city,
-          pincode: pincode,
-          address: address,
-          phoneNo: phoneNo,
+  var checkEmail = await Customer.findAll({
+    attributes: ["id", "email"],
+    where: {
+      email: email,
+    },
+  });
+  console.log(checkEmail);
+  if (checkEmail?.length) {
+    res.json({
+      status: 200,
+      data: "user already registered!!",
+      boolean: false,
+    });
+  } else {
+    const hash = await bcrypt.hash(password, 10);
+    const t = await db.sequelize.transaction();
+    try {
+      var addRegistrationData = await Customer.create(
+        {
+          username: first_name,
+          password: hash,
+          first_name: first_name,
+          last_name: last_name,
+          gender: gender,
+          dob: dob,
           email: email,
+          phoneNo: phoneNo,
+          customer_addresses: {
+            country: country,
+            state: state,
+            city: city,
+            pincode: pincode,
+            address: address,
+            phoneNo: phoneNo,
+            email: email,
+          },
         },
-      },
-      {
-        include: { model: Customer_address, transaction: t },
-      }
-    );
+        {
+          include: { model: Customer_address, transaction: t },
+        }
+      );
 
-    console.log(addRegistrationData.id);
-    if (addRegistrationData.id) {
-      await Cart.create({
-        customer_id: addRegistrationData.id,
-        username: first_name,
-        transaction: t,
-      });
+      console.log(addRegistrationData.id);
+      if (addRegistrationData.id) {
+        await Cart.create({
+          customer_id: addRegistrationData.id,
+          username: first_name,
+          transaction: t,
+        });
+      }
+      await t.commit();
+      return res.status(200).json({ data: addRegistrationData });
+    } catch (error) {
+      await t.rollback();
+      console.log(error);
     }
-    await t.commit();
-    res.status(200).json({ data: addRegistrationData });
-  } catch (error) {
-    await t.rollback();
-    console.log(error);
+    return;
   }
-  return;
 };
 
 const login = async (req, res) => {
-  
   const { email, password } = req.body;
   // var cookie = req.cookies.token;
   // console.log(cookie);
@@ -107,8 +121,6 @@ const login = async (req, res) => {
       email: email,
     },
   });
-
-  res.status(200).json({ checkEmail });
 
   if (checkEmail?.length) {
     const pswCheck = await bcrypt.compare(password, checkEmail[0].password);
@@ -124,12 +136,20 @@ const login = async (req, res) => {
         "malhar"
       );
       localStorage.setItem("token", tokenGenerate);
-      // const datasss = localStorage.getItem('token')
+      res.json({ status: 200, data: tokenGenerate, boolean: true });
+      const getToken = localStorage.getItem("token");
+      console.log(getToken);
     } else {
       console.log("psw is wrong!!!");
+      res.json({ status: 200, data: "psw is wrong!!!", boolean: false });
     }
   } else {
     console.log("email is not registred!!!");
+    res.json({
+      status: 200,
+      data: "email is not registred!!!",
+      boolean: false,
+    });
   }
   // }
 };
