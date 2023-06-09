@@ -6,9 +6,10 @@ const app = express();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const JWT_SECRET_KEY = require("../constants/constant");
 app.use(cookieParser());
-const LocalStorage = require("node-localstorage").LocalStorage,
-  localStorage = new LocalStorage("./scratch");
+// const LocalStorage = require("node-localstorage").LocalStorage,
+//   localStorage = new LocalStorage("./scratch");
 
 const Customer = db.customer;
 const Customer_address = db.customer_address;
@@ -101,7 +102,6 @@ const signup = async (req, res) => {
       return res.status(200).json({ data: addRegistrationData });
     } catch (error) {
       await t.rollback();
-      console.log(error);
     }
     return;
   }
@@ -124,21 +124,24 @@ const login = async (req, res) => {
 
   if (checkEmail?.length) {
     const pswCheck = await bcrypt.compare(password, checkEmail[0].password);
+    console.log(pswCheck);
     if (pswCheck) {
-      const tokenGenerate = jwt.sign(
-        {
-          customer_id: checkEmail[0].id,
-          f_name: checkEmail[0].first_name,
-          l_name: checkEmail[0].last_name,
-          email: checkEmail[0].email,
-          psw: checkEmail[0].password,
-        },
-        "malhar"
-      );
-      localStorage.setItem("token", tokenGenerate);
-      res.json({ status: 200, data: tokenGenerate, boolean: true });
-      const getToken = localStorage.getItem("token");
-      console.log(getToken);
+      const userData = {
+        customer_id: checkEmail[0].id,
+        f_name: checkEmail[0].first_name,
+        l_name: checkEmail[0].last_name,
+        email: checkEmail[0].email,
+        psw: checkEmail[0].password,
+      };
+      const tokenGenerate = jwt.sign(userData, "malhar");
+      // localStorage.setItem("token", tokenGenerate);
+      res.json({
+        status: 200,
+        token: tokenGenerate,
+       userData,
+        boolean: true,
+      });
+      // const getToken = localStorage.getItem("token");
     } else {
       console.log("psw is wrong!!!");
       res.json({ status: 200, data: "psw is wrong!!!", boolean: false });

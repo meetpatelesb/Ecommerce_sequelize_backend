@@ -16,8 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       cart_id: DataTypes.INTEGER,
       product_id: DataTypes.INTEGER,
       quentity: DataTypes.INTEGER,
+      name: DataTypes.STRING,
+      discription: DataTypes.STRING,
+      product_image: DataTypes.STRING,
       price: DataTypes.INTEGER,
-      isOrderComplete: DataTypes.ENUM('yes','no'),
+      isOrderComplete: DataTypes.ENUM("yes", "no"),
       deletedAt: DataTypes.DATE,
     },
     {

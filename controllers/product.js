@@ -5,6 +5,7 @@ const app = express();
 const Product = db.product;
 const Product_category = db.product_category;
 const Product_seller = db.product_seller;
+const { Op, QueryTypes } = require("sequelize");
 
 const addProduct = async (req, res) => {
   const { name, discription, price } = req.body;
@@ -53,7 +54,6 @@ const getProductDetails = async (req,res)=>{
     const getProductData = await Product.findAll({
       attributes: ["id", "name", "discription", "price", "product_image"],
     });
-    console.log(getProductData);
     res.json({ data: getProductData });
   } catch (error) {
     console.log(error);
