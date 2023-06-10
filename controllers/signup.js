@@ -138,7 +138,7 @@ const login = async (req, res) => {
       res.json({
         status: 200,
         token: tokenGenerate,
-       userData,
+        userData,
         boolean: true,
       });
       // const getToken = localStorage.getItem("token");
