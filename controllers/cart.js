@@ -5,8 +5,6 @@ const app = express();
 const Product = db.product;
 const Product_cart = db.product_cart;
 const { Op, QueryTypes } = require("sequelize");
-console.log(Product_cart);
-
 
 const updateq = async (quentity, cartId, productId) => {
   const updateQuentity = await Product_cart.update(
@@ -26,10 +24,8 @@ const updateq = async (quentity, cartId, productId) => {
   return updateQuentity;
 };
 
-
 const addToCart = async (req, res) => {
   const { id, userId } = req.body;
-  console.log(id, userId, "addtocart----------------------------------");
   try {
     const itemCheckAlready = await Product_cart.findAll({
       attributes: ["quentity"],
@@ -52,7 +48,6 @@ const addToCart = async (req, res) => {
 
     if (getProductData) {
       if (itemCheckAlready[0] === undefined) {
-        console.log("first time insert------------------------");
         const addtocart = await Product_cart.create({
           cart_id: userId,
           product_id: id,
@@ -63,11 +58,10 @@ const addToCart = async (req, res) => {
           discription: discription,
         });
       } else {
-         console.log("already already------------------------");
         var quentity = itemCheckAlready[0].dataValues.quentity;
         quentity++;
 
-      const updateQuentity =   updateq(quentity,userId,id);
+        const updateQuentity = updateq(quentity, userId, id);
         res.json({ updateQuentity });
       }
     } else {
@@ -83,7 +77,6 @@ const addToCart = async (req, res) => {
 
 const getCartItems = async (req, res) => {
   const { userId } = req.body;
-  console.log("cart geting");
   try {
     const getcartitems = await Product_cart.findAll({
       attributes: [
@@ -104,9 +97,7 @@ const getCartItems = async (req, res) => {
   }
 };
 
-
 const updateCartItems = async (req, res) => {
-  console.log(req.body);
   const { cartId, productId, type } = req.body;
   try {
     const quentityCount = await Product_cart.findAll({
@@ -120,38 +111,19 @@ const updateCartItems = async (req, res) => {
       },
     });
 
-    console.log(quentityCount[0].dataValues.quentity);
     var quentity = quentityCount[0].dataValues.quentity;
-
-
 
     if (quentityCount[0].dataValues.quentity) {
       if (type === "inc") {
-        // count+1
         quentity++;
-        console.log(cartId, productId, quentity, "increament======");
-        const updateQuentity= updateq(quentity, cartId, productId);
+        const updateQuentity = updateq(quentity, cartId, productId);
         res.json({ updateQuentity });
-        // console.log(updateQuentity);
       } else if (type === "dec") {
         if (quentity > 1) {
           quentity--;
-          console.log(cartId, productId, quentity, "decreament======");
-      const updateQuentity = updateq(quentity, cartId, productId);
-          // const updateQuentity = await Product_cart.update(
-          //   {
-          //     quentity: quentity,
-          //   },
-          //   {
-          //     where: {
-          //       [Op.and]: [
-          //         { cart_id: cartId },
-          //         { product_id: productId },
-          //         { isOrderComplete: "no" },
-          //       ],
-          //     },
-          //   }
-          // );
+
+          const updateQuentity = updateq(quentity, cartId, productId);
+
           res.json({ updateQuentity });
         }
         //count--1

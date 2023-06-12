@@ -17,10 +17,12 @@ app.use( express.static( __dirname+"/product_images"));
 let user = require("./routes/signupLogin");
 let product = require("./routes/adminProduct");
 let addToCart = require('./routes/addToCart')
+let orderplace = require('./routes/orderplace')
 
 app.use("/", user);
 app.use("/", product);
 app.use('/',addToCart)
+app.use('/',orderplace)
 
 
 app.listen(PORT, (req, res) => {

@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       //one to many
-      customer.hasMany(models.product_cart, {
-        foreignKey: "customer_id",
-      });
+      // customer.hasMany(models.product_cart, {
+      //   foreignKey: "customer_id",
+      // });
       //one to many
       customer.hasMany(models.product_order, {
         foreignKey: "customer_id",

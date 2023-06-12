@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       customer_address.belongsTo(models.customer, {
         foreignKey: "customer_id",
       });
-      //one to many
-      customer_address.hasMany(models.order,{
-        foreignKey:"address_id"
-      });
+      // //one to many
+      // customer_address.hasMany(models.order,{
+      //   foreignKey:"address_id"
+      // });
     }
   }
   customer_address.init(
