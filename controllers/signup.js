@@ -16,7 +16,6 @@ const Customer_address = db.customer_address;
 const Cart = db.cart;
 
 const signup = async (req, res) => {
-  console.log(req.body);
   // const data = {
   //   address: "kailashnagar,atkot",
   //   city: "Ahmedabad",
@@ -54,7 +53,7 @@ const signup = async (req, res) => {
       email: email,
     },
   });
-  console.log(checkEmail);
+
   if (checkEmail?.length) {
     res.json({
       status: 200,
@@ -90,7 +89,7 @@ const signup = async (req, res) => {
         }
       );
 
-      console.log(addRegistrationData.id);
+    
       if (addRegistrationData.id) {
         await Cart.create({
           customer_id: addRegistrationData.id,
@@ -109,12 +108,6 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  // var cookie = req.cookies.token;
-  // console.log(cookie);
-  // if (cookie) {
-  //   const data = jwt.verify(cookie, "malhar");
-  //   console.log(data);
-  // } else {
   const checkEmail = await Customer.findAll({
     attributes: ["first_name", "last_name", "id", "email", "password"],
     where: {
@@ -124,7 +117,6 @@ const login = async (req, res) => {
 
   if (checkEmail?.length) {
     const pswCheck = await bcrypt.compare(password, checkEmail[0].password);
-    console.log(pswCheck);
     if (pswCheck) {
       const userData = {
         customer_id: checkEmail[0].id,
@@ -135,6 +127,7 @@ const login = async (req, res) => {
       };
       const tokenGenerate = jwt.sign(userData, "malhar");
       // localStorage.setItem("token", tokenGenerate);
+      console.log(tokenGenerate);
       res.json({
         status: 200,
         token: tokenGenerate,

@@ -25,7 +25,7 @@ const updateq = async (quentity, cartId, productId) => {
 };
 
 const addToCart = async (req, res) => {
-  const { id, userId } = req.body;
+  const { id, userId } = req.body.data;
   try {
     const itemCheckAlready = await Product_cart.findAll({
       attributes: ["quentity"],
@@ -76,7 +76,7 @@ const addToCart = async (req, res) => {
 };
 
 const getCartItems = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.body.data;
   try {
     const getcartitems = await Product_cart.findAll({
       attributes: [
@@ -98,7 +98,7 @@ const getCartItems = async (req, res) => {
 };
 
 const updateCartItems = async (req, res) => {
-  const { cartId, productId, type } = req.body;
+  const { cartId, productId, type } = req.body.data;
   try {
     const quentityCount = await Product_cart.findAll({
       attributes: ["quentity"],

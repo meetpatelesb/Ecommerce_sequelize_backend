@@ -8,7 +8,10 @@ const Product_seller = db.product_seller;
 const { Op, QueryTypes } = require("sequelize");
 
 const addProduct = async (req, res) => {
+  console.log(req.body);
   const { name, discription, price } = req.body;
+  console.log(name, discription, price,"---------------------------------------->>>>>");
+  // console.log(req.file);
   const image = req.file.filename;
   const t = await db.sequelize.transaction();
   try {
@@ -46,10 +49,6 @@ const addProduct = async (req, res) => {
 };
 
 const getProductDetails = async (req,res)=>{
-  const data={
-    name:"meet",
-    age:23
-  }
   try {
     const getProductData = await Product.findAll({
       attributes: ["id", "name", "discription", "price", "product_image"],

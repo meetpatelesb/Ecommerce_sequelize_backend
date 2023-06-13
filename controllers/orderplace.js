@@ -10,7 +10,7 @@ const ProductOrders = db.product_order;
 const { Op, QueryTypes, where } = require("sequelize");
 
 const getAddress = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.body.data;
   try {
     const getAddress = await CustomerAddress.findAll({
       attributes: [
@@ -35,7 +35,7 @@ const getAddress = async (req, res) => {
 };
 
 const orderPlace = async (req, res) => {
-  const { customer_id, pincode, city, state, country, address } = req.body;
+  const { customer_id, pincode, city, state, country, address } = req.body.address;
   try {
     const orderDetails = await Order.create({
       customer_id: customer_id,
@@ -89,7 +89,7 @@ const orderPlace = async (req, res) => {
 };
 
 const orderList = async (req, res) => {
-  const { customer_id } = req.body;
+  const { customer_id } = req.body.data;
   const orderList = await Order.findAll({
     where: {
       customer_id: customer_id,
@@ -100,6 +100,7 @@ const orderList = async (req, res) => {
       },
     ],
   });
+  console.log(orderList);
   res.json({ orderList });
 };
 module.exports = {
